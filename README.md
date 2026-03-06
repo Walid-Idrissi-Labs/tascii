@@ -1,6 +1,6 @@
 # tascii
 
-A fast, minimal task manager for the terminal.
+A fast, minimal task manager for the terminal built in GO.
 
 ```
   ID    STATUS  PRIO   TITLE                                   TAGS              DUE
@@ -41,18 +41,18 @@ tascii add "Deploy to production" --priority !!! --due 2024-12-25 --tag work
 tascii add "Buy groceries" -p ! -d 2024-12-20 -t personal -n "Check the fridge first"
 
 # List tasks
-tascii list                        # all tasks
-tascii list --tag work             # filter by tag
-tascii list --sort priority        # sort by priority
-tascii list --filter in-progress   # only in-progress tasks
+tascii list                        
+tascii list --tag work             
+tascii list --sort priority        
+tascii list --filter in-progress   
 
 # View & today
-tascii view 3                      # full detail for task #3
-tascii today                       # due today + overdue
+tascii view 3                      
+tascii today                       
 
 # Update status
-tascii start 3                     # mark as in-progress  ◐
-tascii done 3                      # mark as done         ✓
+tascii start 3                     
+tascii done 3                      
 
 # Edit
 tascii edit 3 --title "New title"
@@ -61,12 +61,12 @@ tascii edit 3 --tag work --tag urgent
 tascii edit 3 --clear-due
 
 # Delete & cleanup
-tascii delete 3                    # with confirmation
-tascii delete 3 --force            # skip confirmation
-tascii clear                       # remove all completed tasks
+tascii delete 3                    
+tascii delete 3 --force            
+tascii clear                       
 
 # Info
-tascii summary                     # compact stats overview
+tascii summary                     
 tascii --version
 tascii --help
 tascii [command] --help
@@ -74,11 +74,10 @@ tascii [command] --help
 
 ## Priority levels
 
-| Symbol | Level  | Meaning        |
-|--------|--------|----------------|
-| `!`    | Low    | Nice to have   |
-| `!!`   | Medium | Should do      |
-| `!!!`  | High   | Must do        |
+- `!` Low Priority
+- `!!` Medium Priority
+- `!!!` High Priority
+
 
 ## Shell startup tip
 
