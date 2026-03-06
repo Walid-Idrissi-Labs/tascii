@@ -1,0 +1,47 @@
+name: Release
+
+# This workflow runs ONLY when you push a tag that starts with "v".
+# So `git tag v1.0.0 && git push --tags` triggers it.
+# Regular commits to main do NOT trigger this workflow.
+on:
+  push:
+    tags:
+      - "v*"
+
+# Give the workflow permission to create GitHub Releases and push files.
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the full git history (fetch-depth: 0).
+      # GoReleaser uses git history to generate changelogs.
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Step 2: Install Go. Use the version that matches your go.mod.
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.21"
+
+      # Step 3: Run GoReleaser.
+      # It reads .goreleaser.yaml, builds all binaries, creates the GitHub
+      # Release, uploads .tar.gz files, creates .deb/.rpm packages,
+      # and pushes the Homebrew formula to your tap.
+      #
+      # GITHUB_TOKEN is automatically provided by GitHub Actions — you don't
+      # need to create it yourself. GoReleaser uses it to create the Release
+      # and to push to your homebrew-tascii repository.
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v5
+        with:
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
