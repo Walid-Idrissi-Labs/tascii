@@ -79,7 +79,7 @@ tascii [command] --help
 - `!!!` High Priority
 
 
-## Shell startup tip
+## Shell startup option
 
 Add to your `.zshrc` or `.bashrc` to see a summary every time you open a terminal:
 
