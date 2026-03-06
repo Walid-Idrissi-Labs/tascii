@@ -1,17 +1,6 @@
-# .goreleaser.yaml
-#
-# GoReleaser is a tool that automates the entire release process:
-#   1. Compiles your Go binary for multiple platforms (macOS + Linux, amd64 + arm64)
-#   2. Creates a GitHub Release and uploads the binaries
-#   3. Generates a Homebrew formula and pushes it to your tap repo
-#   4. Creates .deb and .rpm packages for Linux package managers
-#
-# It runs automatically via GitHub Actions whenever you push a version tag
-# like `git tag v1.0.0 && git push --tags`
-
 version: 2
 
-# Run `go mod tidy` before building to ensure the module is clean.
+
 before:
   hooks:
     - go mod tidy
@@ -20,9 +9,6 @@ builds:
   - id: tascii
     binary: tascii
 
-    # The target platforms. GoReleaser will cross-compile for all combinations.
-    # darwin = macOS, linux = Linux.
-    # amd64 = Intel/AMD 64-bit, arm64 = Apple Silicon (M1/M2/M3) and ARM Linux.
     goos:
       - linux
       - darwin
@@ -30,58 +16,54 @@ builds:
       - amd64
       - arm64
 
-    # ldflags are passed to the Go linker:
-    #   -s   strips the symbol table (smaller binary)
-    #   -w   strips DWARF debug info (smaller binary)
-    # Together they reduce binary size by ~30% with no impact on runtime behavior.
+
     ldflags:
       - -s -w
 
 archives:
   - format: tar.gz
-    # Naming: tascii_darwin_arm64.tar.gz, tascii_linux_amd64.tar.gz, etc.
     name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
     files:
       - LICENSE
       - README.md
 
-# nfpms generates native Linux packages (.deb for apt, .rpm for yum/dnf).
+
 nfpms:
   - id: packages
     package_name: tascii
-    vendor: YOURUSERNAME
-    homepage: https://github.com/YOURUSERNAME/tascii
-    maintainer: Your Name <your@email.com>
+    vendor: Walid
+    homepage: https://github.com/walid-idrissi-labs/tascii
+    maintainer: Your Name <walid.idrissi.labs@gmail.com>
     description: A fast, minimal terminal task manager with priorities and deadlines.
     license: MIT
     formats:
-      - deb   # Debian/Ubuntu → apt install
-      - rpm   # Fedora/RHEL   → dnf install
+      - deb   
+      - rpm   
     contents:
       - src: ./LICENSE
         dst: /usr/share/doc/tascii/LICENSE
 
-# brews generates a Homebrew formula and pushes it to your tap repo.
+
 brews:
   - name: tascii
     repository:
-      owner: YOURUSERNAME
-      name: homebrew-tascii   # You'll create this repo on GitHub
+      owner: walid-idrissi-labs
+      name: homebrew-tascii  
     commit_author:
       name: goreleaserbot
       email: bot@goreleaser.com
-    homepage: https://github.com/YOURUSERNAME/tascii
+    homepage: https://github.com/walid-idrissi-labs/tascii
     description: A fast, minimal terminal task manager with priorities and deadlines.
     license: MIT
-    # Smoke test: Homebrew runs this after installing to verify the binary works.
+  #veritify binary works
     test: |
       system "#{bin}/tascii --version"
 
 checksum:
   name_template: "checksums.txt"
 
-# The GitHub Release section — GoReleaser creates the release and uploads assets.
+#github releasses
 release:
   github:
-    owner: YOURUSERNAME
+    owner: walid-idrissi-labs
     name: tascii
