@@ -43,8 +43,8 @@ go install github.com/walid-idrissi-labs/tascii@latest
 ```sh
 # Add tasks
 tascii add "Fix the login bug"
-tascii add "Deploy to production" --priority !!! --due 2024-12-25 --tag work
-tascii add "Buy groceries" -p ! -d 2024-12-20 -t personal -n "Check the fridge first"
+tascii add "Deploy to production" --priority high --due 2024-12-25 --tag work
+tascii add "Buy groceries" -p 0 -d 2024-12-20 -t personal -n "Check the fridge first"
 
 # List tasks
 tascii list                        
@@ -62,7 +62,8 @@ tascii done 3
 
 # Edit
 tascii edit 3 --title "New title"
-tascii edit 3 --priority !!! --due 2025-01-10
+tascii edit 3 --priority 2 --due 2025-01-10
+tascii edit 3 --priority high --due 2025-01-10
 tascii edit 3 --tag work --tag urgent
 tascii edit 3 --clear-due
 
@@ -80,9 +81,11 @@ tascii [command] --help
 
 ## Priority levels
 
-- `!` Low Priority
-- `!!` Medium Priority
-- `!!!` High Priority
+- `!` Low Priority        : 0 or low
+- `!!` Medium Priority    : 1 or med 
+- `!!!` High Priority     : 2 or high
+
+
 
 
 ## Shell startup option
@@ -102,6 +105,7 @@ You can back it up, sync it with Dropbox/iCloud, or edit it manually.
 ## Upcoming Features
  
  - Complete Multiple Reminders at once.
+ - Placeholder names for reminders added without name
 
 ## License
 
