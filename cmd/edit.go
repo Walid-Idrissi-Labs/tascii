@@ -19,7 +19,7 @@ Only the flags you provide will be changed.
 
 Examples:
   tascii edit 3 --title "Updated title"
-  tascii edit 3 --priority !!! --due 2025-01-15
+  tascii edit 3 --priority high --due 2025-01-15
   tascii edit 3 --tag work --tag urgent
   tascii edit 3 --clear-due`,
 	Args: cobra.ExactArgs(1),
@@ -37,7 +37,7 @@ var (
 
 func init() {
 	editCmd.Flags().StringVar(&editTitle, "title", "", "New title")
-	editCmd.Flags().StringVarP(&editPriority, "priority", "p", "", "New priority: !, !!, or !!!")
+	editCmd.Flags().StringVarP(&editPriority, "priority", "p", "", "New priority: 0 (low), 1 (med), or 2 (high); can also use low/med/high")
 	editCmd.Flags().StringVarP(&editDue, "due", "d", "", "New due date (YYYY-MM-DD)")
 	editCmd.Flags().StringVarP(&editNote, "note", "n", "", "New note (replaces existing)")
 	editCmd.Flags().StringArrayVarP(&editTags, "tag", "t", nil, "New tags — replaces all existing tags")

@@ -3,6 +3,7 @@ package task
 import (
 	"fmt"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -54,17 +55,37 @@ func (t Task) PrioritySymbol() string {
 }
 
 
-//priority to int
+// ParsePriority accepts both text and numeric priority formats
+// Text: "low", "med" (or "medium"), "high"
+// Numbers: 0, 1, 2
+// Returns the internal priority value (1, 2, or 3)
 func ParsePriority(s string) (int, error) {
-	switch strings.TrimSpace(s) {
-	case "!":
+	s = strings.TrimSpace(s)
+	
+	// Try parsing as number first
+	if num, err := strconv.Atoi(s); err == nil {
+		switch num {
+		case 0:
+			return 1, nil // 0 -> priority 1 (displays as !)
+		case 1:
+			return 2, nil // 1 -> priority 2 (displays as !!)
+		case 2:
+			return 3, nil // 2 -> priority 3 (displays as !!!)
+		default:
+			return 0, fmt.Errorf("invalid priority %q — use 0, 1, 2 or low, med, high", s)
+		}
+	}
+	
+	// Try parsing as text
+	switch strings.ToLower(s) {
+	case "low":
 		return 1, nil
-	case "!!":
+	case "med", "medium":
 		return 2, nil
-	case "!!!":
+	case "high":
 		return 3, nil
 	default:
-		return 0, fmt.Errorf("invalid priority %q — use !, !!, or !!!", s)
+		return 0, fmt.Errorf("invalid priority %q — use 0, 1, 2 or low, med, high", s)
 	}
 }
 

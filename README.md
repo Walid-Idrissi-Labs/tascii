@@ -98,6 +98,11 @@ tascii summary
 Tasks are stored at `~/.local/share/tascii/tasks.json` as human-readable JSON.
 You can back it up, sync it with Dropbox/iCloud, or edit it manually.
 
+
+## Upcoming Features
+ 
+ - Complete Multiple Reminders at once.
+
 ## License
 
 MIT

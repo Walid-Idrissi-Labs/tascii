@@ -18,8 +18,8 @@ var addCmd = &cobra.Command{
 
 Examples:
   tascii add "Fix login bug"
-  tascii add "Fix login bug" --priority !!! --due 2024-12-25
-  tascii add "Fix login bug" -p !!! -d 2024-12-25 -t work -n "Affects OAuth flow"`,
+  tascii add "Fix login bug" --priority high --due 2024-12-25
+  tascii add "Fix login bug" -p 2 -d 2024-12-25 -t work -n "Affects OAuth flow"`,
 
 
 	Args: cobra.MinimumNArgs(1),
@@ -37,7 +37,7 @@ var (
 )
 
 func init() {
-	addCmd.Flags().StringVarP(&addPriority, "priority", "p", "!", "Priority: !, !!, or !!!")
+	addCmd.Flags().StringVarP(&addPriority, "priority", "p", "" , "Priority: 0 (low), 1 (med), or 2 (high); can also use low/med/high")
 	addCmd.Flags().StringVarP(&addDue, "due", "d", "", "Due date in YYYY-MM-DD format")
 	addCmd.Flags().StringArrayVarP(&addTags, "tag", "t", []string{}, "Tag (can repeat: -t work -t urgent)")
 	addCmd.Flags().StringVarP(&addNote, "note", "n", "", "Optional note or description")
@@ -49,11 +49,15 @@ func init() {
 func runAdd(cmd *cobra.Command, args []string) error {
 	title := strings.TrimSpace(strings.Join(args, " "))
 
-	priority, err := task.ParsePriority(addPriority)
-	if err != nil {
-		return err
+	var priority int
+	if addPriority != "" {
+		var err error
+		priority, err = task.ParsePriority(addPriority)
+		if err != nil {
+			return err
+		}
 	}
-
+	
 
 	if addDue != "" {
 		if _, err := time.Parse("2006-01-02", addDue); err != nil {
@@ -86,10 +90,14 @@ func runAdd(cmd *cobra.Command, args []string) error {
 
 	tasks = append(tasks, t)
 
+
+
+
 	if err := store.Save(tasks); err != nil {
 		return err
 	}
 
 	display.PrintSuccess(fmt.Sprintf("Task #%d added: %s", t.ID, t.Title))
 	return nil
+
 }
