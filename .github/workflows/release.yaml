@@ -1,6 +1,6 @@
 name: Release
 
-
+#github action to release the project using goreleaser when a new tag is pushed
 on:
   push:
     tags:

@@ -23,7 +23,13 @@ brew install tascii
 ### apt (Debian / Ubuntu)
 ```sh
 # Add the repo and install
+
+#for amd64 systems (x86)	
 curl -sL https://github.com/walid-idrissi-labs/tascii/releases/latest/download/tascii_linux_amd64.tar.gz | tar xz
+
+#for arm64 systems
+curl -sL https://github.com/walid-idrissi-labs/tascii/releases/latest/download/tascii_linux_arm64.tar.gz | tar xz
+
 sudo mv tascii /usr/local/bin/
 ```
 
