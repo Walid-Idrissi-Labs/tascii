@@ -27,6 +27,9 @@ func Execute() {
 	}
 }
 
+var version = "dev" //*default
+
 func init() {
-	rootCmd.Version = "1.1.1"
+	//* linker to repo 
+	rootCmd.Version = version 
 }

@@ -1,4 +1,4 @@
-# tascii
+# tascii 1.2.0
 
 A fast, minimal task manager for the terminal built in GO.
 
@@ -105,7 +105,6 @@ You can back it up, sync it with Dropbox/iCloud, or edit it manually.
 ## Upcoming Features
  
  - Complete Multiple Reminders at once.
- - Placeholder names for reminders added without name
 
 ## License
 

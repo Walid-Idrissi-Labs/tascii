@@ -22,7 +22,7 @@ Examples:
   tascii add "Fix login bug" -p 2 -d 2024-12-25 -t work -n "Affects OAuth flow"`,
 
 
-	Args: cobra.MinimumNArgs(1),
+	Args: cobra.ArbitraryArgs,
 
 
 	RunE: runAdd,
@@ -48,6 +48,9 @@ func init() {
 
 func runAdd(cmd *cobra.Command, args []string) error {
 	title := strings.TrimSpace(strings.Join(args, " "))
+	if title == "" {
+		title = "New Reminder"
+	}
 
 	var priority int
 	if addPriority != "" {
