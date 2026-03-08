@@ -10,9 +10,9 @@ import (
 )
 
 var doneCmd = &cobra.Command{
-	Use:   "done [id]",
-	Short: "Mark a task as done",
-	Args:  cobra.ExactArgs(1), 
+	Use:   "done [id... | all]",
+	Short: "Mark one, multiple or all tasks as done",
+	Args:  cobra.MinimumNArgs(1),
 	RunE:  runDone,
 }
 
@@ -21,11 +21,6 @@ func init() {
 }
 
 func runDone(cmd *cobra.Command, args []string) error {
-
-	id, err := strconv.Atoi(args[0])
-	if err != nil {
-		return fmt.Errorf("invalid task ID %q — must be a number", args[0])
-	}
 
 	store, err := task.NewStore()
 	if err != nil {
@@ -37,19 +32,45 @@ func runDone(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-
-	updated := false
-	for i := range tasks {
-		if tasks[i].ID == id {
-			tasks[i].Status = task.StatusDone
-			updated = true
-			display.PrintSuccess(fmt.Sprintf("Task #%d marked as done: %s", id, tasks[i].Title))
-			break
+	// Handle "tascii done all"
+	if len(args) == 1 && args[0] == "all" {
+		marked := 0
+		for i := range tasks {
+			if tasks[i].Status != task.StatusDone {
+				tasks[i].Status = task.StatusDone
+				display.PrintSuccess(fmt.Sprintf("Task #%d marked as done: %s", tasks[i].ID, tasks[i].Title))
+				marked++
+			}
 		}
+		if marked == 0 {
+			return fmt.Errorf("no pending tasks to mark as done")
+		}
+		return store.Save(tasks)
 	}
 
-	if !updated {
-		return fmt.Errorf("task #%d not found", id)
+	// Parse numeric IDs
+	ids := make([]int, 0, len(args))
+	for _, arg := range args {
+		id, err := strconv.Atoi(arg)
+		if err != nil {
+			return fmt.Errorf("invalid task ID %q — must be a number", arg)
+		}
+		ids = append(ids, id)
+	}
+
+	for _, id := range ids {
+		found := false
+		for i := range tasks {
+			if tasks[i].ID == id {
+				tasks[i].Status = task.StatusDone
+				found = true
+				display.PrintSuccess(fmt.Sprintf("Task #%d marked as done: %s", id, tasks[i].Title))
+				break
+			}
+		}
+		if !found {
+			return fmt.Errorf("task #%d not found", id)
+		}
 	}
 
 	return store.Save(tasks)

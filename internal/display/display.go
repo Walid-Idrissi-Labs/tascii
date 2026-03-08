@@ -290,3 +290,7 @@ func PrintSuccess(msg string) {
 func PrintInfo(msg string) {
 	infoC.Printf("  ℹ %s\n", msg)
 }
+
+func PrintMuted(msg string) {
+	mutedC.Println(msg)
+}

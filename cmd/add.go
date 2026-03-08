@@ -19,7 +19,8 @@ var addCmd = &cobra.Command{
 Examples:
   tascii add "Fix login bug"
   tascii add "Fix login bug" --priority high --due 2024-12-25
-  tascii add "Fix login bug" -p 2 -d 2024-12-25 -t work -n "Affects OAuth flow"`,
+  tascii add "Fix login bug" -p 2 -d 2024-12-25 -t work -n "Affects OAuth flow"
+  tascii add --tag "urgent"`,
 
 
 	Args: cobra.ArbitraryArgs,

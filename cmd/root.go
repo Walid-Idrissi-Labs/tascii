@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/walid-idrissi-labs/tascii/internal/display"
 )
 
 
@@ -17,6 +18,12 @@ Manage tasks with priorities, deadlines, tags, and notes.
 Data is stored locally at: ~/.local/share/tascii/tasks.json`,
 
 	SilenceUsage: true,
+	Run: func(cmd *cobra.Command, args []string) {
+		display.PrintMuted("Hi! I'm Tasky, a task manager for the CLI.")
+		display.PrintMuted("Made by Walid — check out my profile on GitHub: https://github.com/walid-idrissi-labs")
+		display.PrintMuted("")
+		display.PrintMuted("To get started, run: tascii -h")
+	},
 }
 
 
