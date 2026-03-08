@@ -1,4 +1,4 @@
-# tascii 1.2.0
+# tascii 1.3.0
 
 A fast, minimal task manager for the terminal built in GO.
 
@@ -45,6 +45,8 @@ go install github.com/walid-idrissi-labs/tascii@latest
 tascii add "Fix the login bug"
 tascii add "Deploy to production" --priority high --due 2024-12-25 --tag work
 tascii add "Buy groceries" -p 0 -d 2024-12-20 -t personal -n "Check the fridge first"
+tascii add --tag "urgent"
+
 
 # List tasks
 tascii list                        
@@ -58,7 +60,9 @@ tascii today
 
 # Update status
 tascii start 3                     
-tascii done 3                      
+tascii done 3            
+tascii done 6 7
+tascii done all          
 
 # Edit
 tascii edit 3 --title "New title"
@@ -104,7 +108,7 @@ You can back it up, sync it with Dropbox/iCloud, or edit it manually.
 
 ## Upcoming Features
  
- - Complete Multiple Reminders at once.
+ - *more coming soon...*
 
 ## License
 
