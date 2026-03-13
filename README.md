@@ -108,6 +108,7 @@ You can back it up, sync it with Dropbox/iCloud, or edit it manually.
 
 ## Upcoming Features
  
+ - Relative dates for adding new Tasks *(e.g: today, tomorrow)*
  - *more coming soon...*
 
 ## License
