@@ -1,4 +1,4 @@
-# tascii 1.3.0
+# tascii 1.4.0
 
 A fast, minimal task manager for the terminal built in GO.
 
